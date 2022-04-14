@@ -57,6 +57,7 @@ spec:
         CONTAINR_REPO  = credentials('CONTAINR_REPO')
         CONTAINR_USER  = credentials('CONTAINR_USER')
         CONTAINR_PASS  = credentials('CONTAINR_PASS')
+        IMAGE_TAG      = ${currentBuild.number}
     }
     stages {
         stage('Clone') {
@@ -73,14 +74,14 @@ spec:
         }
         stage('Build') {
             steps {
-                sh 'docker build -t $CONTAINR_REPO:env.BRANCH_NAME-${currentBuild.number} .'
+                sh 'docker build -t $CONTAINR_REPO:$IMAGE_TAG .'
                 echo "Built Docker Image"
             }
         }
         stage('Push') {
             steps {
                 sh 'docker login -u $CONTAINR_USER -p $CONTAINR_PASS'
-                sh 'docker push $CONTAINR_REPO:env.BRANCH_NAME-${currentBuild.number}'
+                sh 'docker push $CONTAINR_REPO:$IMAGE_TAG'
                 echo "Pushed Docker Image"
             }
         }
