@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        docker { dockerfile true }
+        kubernetes
     }
     stages {
         stage('Change') {
