@@ -73,17 +73,14 @@ spec:
         }
         stage('Build') {
             steps {
-               // sh 'docker build -t $CONTAINR_REPO:${env.BUILD_NUMBER} .'
-                sh 'echo $CONTAINR_REPO'
-                sh 'echo "${CONTAINR_REPO}"'
-                sh 'echo ${CONTAINR_REPO}'
+                sh 'docker build -t $CONTAINR_REPO:env.BRANCH_NAME-${currentBuild.number} .'
                 echo "Built Docker Image"
             }
         }
         stage('Push') {
             steps {
                 sh 'docker login -u $CONTAINR_USER -p $CONTAINR_PASS'
-                sh 'docker push $CONTAINR_REPO:${env.BUILD_NUMBER}'
+                sh 'docker push $CONTAINR_REPO:env.BRANCH_NAME-${currentBuild.number}'
                 echo "Pushed Docker Image"
             }
         }
