@@ -52,6 +52,7 @@ spec:
     stages {
         stage('Change') {
             steps {
+                sh('ls -lah')
                 sh('./change.sh')
                 sh 'echo "Applied changes"'
 
