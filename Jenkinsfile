@@ -22,25 +22,25 @@ spec:
           mountPath: /certs
       env:
         - name: DOCKER_TLS_CERTDIR
-          value: /certs
+          value: "/certs"
         - name: DOCKER_CERT_PATH
-          value: /certs
+          value: "/certs"
         - name: DOCKER_TLS_VERIFY
-          value: 1
+          value: "1"
         - name: DOCKER_HOST
-          value: tcp://localhost:2376
+          value: "tcp://localhost:2376"
     - name: dind
       image: docker:dind
       securityContext:
         privileged: true
       env:
         - name: DOCKER_TLS_CERTDIR
-          value: /certs
+          value: "/certs"
       volumeMounts:
         - name: dind-storage
           mountPath: /var/lib/docker
         - name: dind-certs
-          mountPath: /certs
+          mountPath: /certs/client
   volumes:
     - name: dind-storage
       emptyDir: {}
@@ -54,7 +54,7 @@ spec:
             steps {
                 sh('ls -lah')
                 sh 'dos2unix change.sh'
-                sh 'test.sh'
+                sh 'sh test.sh'
                 echo "Applied changes"
 
             }
