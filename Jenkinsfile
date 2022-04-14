@@ -50,6 +50,9 @@ spec:
         }
 
     }
+    triggers {
+        pollSCM('*/1 * * * *')
+    } 
     environment {
         CONTAINR_REPO  = credentials('CONTAINR_REPO')
         CONTAINR_USER  = credentials('CONTAINR_USER')
