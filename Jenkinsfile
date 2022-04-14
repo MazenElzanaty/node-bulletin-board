@@ -53,17 +53,15 @@ spec:
         stage('Change') {
             steps {
                 sh('ls -lah')
-                sh('./change.sh')
-                sh 'echo "Applied changes"'
+                sh ./change.sh
+                echo "Applied changes"
 
             }
         }
         stage('Build') {
             steps {
-                sh '''
-                    echo "Building Docker Image"
-                    docker build .
-                '''            
+                echo "Building Docker Image"
+                docker build .
             }
         }
     }
