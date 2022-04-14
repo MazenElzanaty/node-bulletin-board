@@ -61,6 +61,7 @@ spec:
         stage('Build') {
             steps {
                 echo "Building Docker Image"
+                docker build .
             }
         }
     }
