@@ -56,7 +56,9 @@ spec:
     }
     stages {
         stage('Clone') {
-            checkout scm  
+            steps {
+                checkout scm
+            }
         }
         stage('Change') {
             steps {
