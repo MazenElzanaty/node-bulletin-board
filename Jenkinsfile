@@ -3,7 +3,7 @@ pipeline {
         kubernetes {
             label 'dind'
             defaultContainer 'docker'
-            yaml dind.yaml
+            yamlFile 'dind.yaml'
         }
 
     }
