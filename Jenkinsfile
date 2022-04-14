@@ -54,7 +54,7 @@ spec:
             steps {
                 sh('ls -lah')
                 sh 'dos2unix change.sh'
-                sh './change.sh'
+                sh 'change.sh'
                 echo "Applied changes"
 
             }
