@@ -70,14 +70,14 @@ spec:
         }
         stage('Build') {
             steps {
-                sh 'docker build -t ${env.CONTAINR_REPO}:${env.BUILD_NUMBER} .'
+                sh 'docker build -t $CONTAINR_REPO:${env.BUILD_NUMBER} .'
                 echo "Built Docker Image"
             }
         }
         stage('Push') {
             steps {
-                sh 'docker login -u ${env.CONTAINR_USER} -p ${env.CONTAINR_PASS}'
-                sh 'docker push ${env.CONTAINR_REPO}:${env.BUILD_NUMBER}'
+                sh 'docker login -u $CONTAINR_USER -p $CONTAINR_PASS'
+                sh 'docker push $CONTAINR_REPO:${env.BUILD_NUMBER}'
                 echo "Pushed Docker Image"
             }
         }
