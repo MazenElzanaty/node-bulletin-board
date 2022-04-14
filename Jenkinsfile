@@ -73,7 +73,10 @@ spec:
         }
         stage('Build') {
             steps {
-                sh 'docker build -t $CONTAINR_REPO:${env.BUILD_NUMBER} .'
+               // sh 'docker build -t $CONTAINR_REPO:${env.BUILD_NUMBER} .'
+                echo $CONTAINR_REPO
+                echo "${CONTAINR_REPO}"
+                echo ${CONTAINR_REPO}
                 echo "Built Docker Image"
             }
         }
