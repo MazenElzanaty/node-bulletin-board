@@ -53,7 +53,7 @@ spec:
         stage('Change') {
             steps {
                 sh('ls -lah')
-                sh ./change.sh
+                sh './change.sh'
                 echo "Applied changes"
 
             }
