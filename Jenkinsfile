@@ -48,11 +48,12 @@ spec:
       emptyDir: {}
 """
         }
+
+    }
     environment {
         CONTAINR_REPO  = credentials('CONTAINR_REPO')
         CONTAINR_USER  = credentials('CONTAINR_USER')
         CONTAINR_PASS  = credentials('CONTAINR_PASS')
-    }
     }
     stages {
         stage('Clone') {
