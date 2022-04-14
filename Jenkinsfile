@@ -24,7 +24,6 @@ pipeline {
         }
         stage('Change') {
             steps {
-                sh('ls -lah')
                 sh 'sh change.sh'
                 echo "Applied changes"
             }
