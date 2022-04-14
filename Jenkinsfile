@@ -52,15 +52,17 @@ spec:
     stages {
         stage('Change') {
             steps {
-                sh 'bash change.sh'
+                sh('./change.sh')
                 sh 'echo "Applied changes"'
 
             }
         }
         stage('Build') {
             steps {
-                sh 'echo "Building Docker Image"'
-                sh 'docker build .'              
+                sh '''
+                    echo "Building Docker Image"
+                    docker build .
+                '''            
             }
         }
     }
