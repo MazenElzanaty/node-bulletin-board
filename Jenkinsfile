@@ -24,7 +24,7 @@ spec:
         - name: DOCKER_TLS_CERTDIR
           value: "/certs"
         - name: DOCKER_CERT_PATH
-          value: "/certs/client"
+          value: "/certs"
         - name: DOCKER_TLS_VERIFY
           value: "1"
         - name: DOCKER_HOST
