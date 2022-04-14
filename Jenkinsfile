@@ -53,7 +53,7 @@ spec:
         stage('Change') {
             steps {
                 sh('ls -lah')
-                sh 'dos2unix *'
+                sh 'dos2unix change.sh'
                 sh './change.sh'
                 echo "Applied changes"
 
