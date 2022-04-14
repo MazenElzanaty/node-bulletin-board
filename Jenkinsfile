@@ -48,20 +48,34 @@ spec:
       emptyDir: {}
 """
         }
+    environment {
+        CONTAINR_REPO  = credentials('CONTAINR_REPO')
+        CONTAINR_USER  = credentials('CONTAINR_USER')
+        CONTAINR_PASS  = credentials('CONTAINR_PASS')
+    }
     }
     stages {
+        stage('Clone') {
+            checkout scm  
+        }
         stage('Change') {
             steps {
                 sh('ls -lah')
                 sh 'sh change.sh'
                 echo "Applied changes"
-
             }
         }
         stage('Build') {
             steps {
-                echo "Building Docker Image"
-                sh 'docker build .'
+                sh 'docker build -t ${env.CONTAINR_REPO}:${env.BUILD_NUMBER} .'
+                echo "Built Docker Image"
+            }
+        }
+        stage('Push') {
+            steps {
+                sh 'docker login -u ${env.CONTAINR_USER} -p ${env.CONTAINR_PASS}'
+                sh 'docker push ${env.CONTAINR_REPO}:${env.BUILD_NUMBER}'
+                echo "Pushed Docker Image"
             }
         }
     }
