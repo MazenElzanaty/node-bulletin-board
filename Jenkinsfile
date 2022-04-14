@@ -57,7 +57,7 @@ spec:
         CONTAINR_REPO  = credentials('CONTAINR_REPO')
         CONTAINR_USER  = credentials('CONTAINR_USER')
         CONTAINR_PASS  = credentials('CONTAINR_PASS')
-        IMAGE_TAG      = "scm.branches[0].name.split("/")[1]+${currentBuild.number}"
+        IMAGE_TAG      = "${currentBuild.number}"
     }
     stages {
         stage('Clone') {
