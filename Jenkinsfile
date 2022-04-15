@@ -29,21 +29,19 @@ pipeline {
                 echo "Applied changes"
             }
         }
-        // stage('Build and Push') {
-        //     steps {
-        //         sh 'docker build -t $CONTAINR_REPO:$IMAGE_TAG .'
-        //         echo "Built Docker Image"
-        //         sh 'docker login -u $CONTAINR_USER -p $CONTAINR_PASS'
-        //         sh 'docker push $CONTAINR_REPO:$IMAGE_TAG'
-        //         echo "Pushed Docker Image"
-        //     }
-        // }
+        stage('Build and Push') {
+            steps {
+                sh 'docker build -t $CONTAINR_REPO:$IMAGE_TAG .'
+                echo "Built Docker Image"
+                sh 'docker login -u $CONTAINR_USER -p $CONTAINR_PASS'
+                sh 'docker push $CONTAINR_REPO:$IMAGE_TAG'
+                echo "Pushed Docker Image"
+            }
+        }
         stage('Deploy') {     
             steps {
                 container('helm') {
-                    //sh "helm upgrade --install  node-bulletin-board  charts/node-bulletin-board/ -f charts/node-bulletin-board/values.yaml -set image.tag=$IMAGE_TAG -n demo --wait"
-                    echo "Hello"
-                    sh "helm --version"
+                    sh "helm upgrade --install  node-bulletin-board  charts/node-bulletin-board/ -f charts/node-bulletin-board/values.yaml -set image.tag=$IMAGE_TAG -n demo --wait"
                 }
             }
         }
