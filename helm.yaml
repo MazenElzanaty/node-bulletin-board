@@ -8,3 +8,10 @@ spec:
     image: alpine/helm
     command: ['cat']
     tty: true
+    resources:
+      limits: 
+        memory: "786Mi"
+        cpu: "600m"
+      requests:
+        memory: "456Mi"
+        cpu: "300m"

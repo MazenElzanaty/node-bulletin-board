@@ -16,7 +16,6 @@ pipeline {
         stage('Change, Build, Push') {
             agent {
                 kubernetes {
-                    label 'dind'
                     defaultContainer 'docker'
                     yamlFile 'dind.yaml'
                 }
@@ -48,7 +47,6 @@ pipeline {
         stage('Deploy') {
             agent {
                 kubernetes {
-                    label 'helm'
                     defaultContainer 'helm'
                     yamlFile 'helm.yaml'
                 }

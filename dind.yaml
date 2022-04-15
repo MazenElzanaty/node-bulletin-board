@@ -14,6 +14,13 @@ spec:
       volumeMounts:
         - name: dind-certs
           mountPath: /certs
+      resources:
+        limits: 
+          memory: "786Mi"
+          cpu: "600m"
+        requests:
+          memory: "456Mi"
+          cpu: "300m"
       env:
         - name: DOCKER_TLS_CERTDIR
           value: "/certs"
