@@ -4,6 +4,12 @@ pipeline {
             label 'dind'
             defaultContainer 'docker'
             yamlFile 'dind.yaml'
+            containerTemplate {
+                name 'helm'
+                image 'alpine/helm'
+                ttyEnabled true
+                command 'cat'
+            }
         }
 
     }
@@ -32,7 +38,7 @@ pipeline {
         //         echo "Pushed Docker Image"
         //     }
         // }
-        stage('Deploy App to Kubernetes') {     
+        stage('Deploy') {     
             steps {
                 container('helm') {
                     //sh "helm upgrade --install  node-bulletin-board  charts/node-bulletin-board/ -f charts/node-bulletin-board/values.yaml -set image.tag=$IMAGE_TAG -n demo --wait"
