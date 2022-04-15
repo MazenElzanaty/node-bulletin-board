@@ -12,14 +12,7 @@ pipeline {
         IMAGE_TAG      = "${currentBuild.number}"
     }
     stages {
-        stage('Change') {
-            agent any
-            steps {
-                sh 'sh change.sh'
-                echo "Applied changes"
-            }
-        }
-        stage('Build and Push') {
+        stage('Change, Build, Push') {
             agent {
                 kubernetes {
                     label 'dind'
@@ -27,14 +20,27 @@ pipeline {
                     yamlFile 'dind.yaml'
                 }
             }
-            steps {
-                sh 'docker build -t $CONTAINR_REPO:$IMAGE_TAG .'
-                echo "Built Docker Image"
-                sh 'docker login -u $CONTAINR_USER -p $CONTAINR_PASS'
-                sh 'docker push $CONTAINR_REPO:$IMAGE_TAG'
-                echo "Pushed Docker Image"
+            stages {
+                stage('Change') {
+                    steps {
+                        sh 'sh change.sh'
+                        echo "Applied changes"
+                    }
+                }
+                stage('Build') {
+                    steps {
+                        sh 'docker build -t $CONTAINR_REPO:$IMAGE_TAG .'
+                        echo "Built Docker Image"
+                    }
+                }
+                stage('Push') { 
+                        sh 'docker login -u $CONTAINR_USER -p $CONTAINR_PASS'
+                        sh 'docker push $CONTAINR_REPO:$IMAGE_TAG'
+                        echo "Pushed Docker Image"
+                }
             }
         }
+        
         stage('Deploy') {     
             agent {
                 kubernetes {
