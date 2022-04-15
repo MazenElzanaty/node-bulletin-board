@@ -36,9 +36,11 @@ pipeline {
                     }
                 }
                 stage('Push') { 
+                    steps {
                         sh 'docker login -u $CONTAINR_USER -p $CONTAINR_PASS'
                         sh 'docker push $CONTAINR_REPO:$IMAGE_TAG'
                         echo "Pushed Docker Image"
+                    }
                 }
             }
         }
