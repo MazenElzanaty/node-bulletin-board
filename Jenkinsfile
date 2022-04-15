@@ -13,7 +13,7 @@ pipeline {
     }
 
     stages {
-        stage('Provision Docker Dind Agent') {
+        stage('Provision Dind Agent') {
             agent {
                 kubernetes {
                     defaultContainer 'docker'
