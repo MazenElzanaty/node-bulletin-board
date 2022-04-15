@@ -49,7 +49,7 @@ pipeline {
             agent {
                 kubernetes {
                     label 'helm'
-                    containerTemplate {
+                    podTemplate {
                         name 'helm'
                         image 'alpine/helm'
                         ttyEnabled true
