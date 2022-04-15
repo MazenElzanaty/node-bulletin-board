@@ -13,6 +13,7 @@ pipeline {
     }
     stages {
         stage('Change') {
+            agent any
             steps {
                 sh 'sh change.sh'
                 echo "Applied changes"
