@@ -54,7 +54,7 @@ pipeline {
                         image 'alpine/helm'
                         ttyEnabled true
                         command 'cat'
-                        serviceAccount: jenkins
+                        serviceAccount: 'jenkins'
                     }
                 }
             }
