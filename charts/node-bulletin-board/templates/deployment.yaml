@@ -8,9 +8,16 @@ spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
+  progressDeadlineSeconds: 40
+  minReadySeconds: 20
   selector:
     matchLabels:
       {{- include "node-bulletin-board.selectorLabels" . | nindent 6 }}
+  strategy:
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 50%
+    type: RollingUpdate
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -20,9 +27,10 @@ spec:
       labels:
         {{- include "node-bulletin-board.selectorLabels" . | nindent 8 }}
     spec:
-      # {{- with .Values.imagePullSecrets }}
-      # imagePullSecrets:
-      #   - name: {{ .Values.imagePullSecrets }}
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       serviceAccountName: {{ include "node-bulletin-board.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
@@ -44,6 +52,10 @@ spec:
             httpGet:
               path: /
               port: http
+            initialDelaySeconds: 10 # Start probing after 10 seconds of container creation.
+            timeoutSeconds: 1 # Timeout if you don't get a response in 1 second.
+            periodSeconds: 15 # Probe frequency in seconds.
+            failureThreshold: 2 # Probe declares failure after 2 attempts.
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
