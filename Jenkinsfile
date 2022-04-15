@@ -37,6 +37,7 @@ pipeline {
                 container('helm') {
                     //sh "helm upgrade --install  node-bulletin-board  charts/node-bulletin-board/ -f charts/node-bulletin-board/values.yaml -set image.tag=$IMAGE_TAG -n demo --wait"
                     echo "Hello"
+                    sh "helm --version"
                 }
             }
         }
