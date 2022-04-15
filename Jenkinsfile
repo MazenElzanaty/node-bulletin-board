@@ -1,16 +1,17 @@
 pipeline {
     agent none
 
-
     triggers {
         pollSCM('*/1 * * * *')
     } 
+
     environment {
         CONTAINR_REPO  = credentials('CONTAINR_REPO')
         CONTAINR_USER  = credentials('CONTAINR_USER')
         CONTAINR_PASS  = credentials('CONTAINR_PASS')
         IMAGE_TAG      = "${currentBuild.number}"
     }
+    
     stages {
         stage('Change, Build, Push') {
             agent {
@@ -34,15 +35,15 @@ pipeline {
                         echo "Built Docker Image"
                     }
                 }
-            //     stage('Push') { 
-            //             sh 'docker login -u $CONTAINR_USER -p $CONTAINR_PASS'
-            //             sh 'docker push $CONTAINR_REPO:$IMAGE_TAG'
-            //             echo "Pushed Docker Image"
-            //     }
+                stage('Push') { 
+                        sh 'docker login -u $CONTAINR_USER -p $CONTAINR_PASS'
+                        sh 'docker push $CONTAINR_REPO:$IMAGE_TAG'
+                        echo "Pushed Docker Image"
+                }
             }
         }
         
-        stage('Deploy') {     
+        stage('Deploy') {
             agent {
                 kubernetes {
                     label 'helm'
