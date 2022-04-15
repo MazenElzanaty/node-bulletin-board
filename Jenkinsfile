@@ -11,7 +11,7 @@ pipeline {
         CONTAINR_PASS  = credentials('CONTAINR_PASS')
         IMAGE_TAG      = "${currentBuild.number}"
     }
-    
+
     stages {
         stage('Change, Build, Push') {
             agent {
@@ -57,7 +57,7 @@ pipeline {
             }
             steps {
                 container('helm') {
-                    sh "helm upgrade --install  node-bulletin-board  charts/node-bulletin-board/ -f charts/node-bulletin-board/values.yaml --set image.tag=$IMAGE_TAG -n demo --wait"
+                    sh "helm upgrade --install  node-bulletin-board  charts/node-bulletin-board/ -f charts/node-bulletin-board/values.yaml --set image.tag=$IMAGE_TAG --wait"
                 }
             }
         }
