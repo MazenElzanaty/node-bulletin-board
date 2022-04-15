@@ -49,13 +49,8 @@ pipeline {
             agent {
                 kubernetes {
                     label 'helm'
-                    podTemplate {
-                        name 'helm'
-                        image 'alpine/helm'
-                        ttyEnabled true
-                        command 'cat'
-                        serviceAccount: 'jenkins'
-                    }
+                    defaultContainer 'helm'
+                    yamlFile 'helm.yaml'
                 }
             }
             steps {
