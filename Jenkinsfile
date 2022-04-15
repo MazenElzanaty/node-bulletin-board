@@ -20,6 +20,7 @@ pipeline {
                     yamlFile 'dind.yaml'
                 }
             }
+
             stages {
                 stage('Change') {
                     steps {
@@ -27,17 +28,17 @@ pipeline {
                         echo "Applied changes"
                     }
                 }
-                stage('Build') {
-                    steps {
-                        sh 'docker build -t $CONTAINR_REPO:$IMAGE_TAG .'
-                        echo "Built Docker Image"
-                    }
-                }
-                stage('Push') { 
-                        sh 'docker login -u $CONTAINR_USER -p $CONTAINR_PASS'
-                        sh 'docker push $CONTAINR_REPO:$IMAGE_TAG'
-                        echo "Pushed Docker Image"
-                }
+            //     stage('Build') {
+            //         steps {
+            //             sh 'docker build -t $CONTAINR_REPO:$IMAGE_TAG .'
+            //             echo "Built Docker Image"
+            //         }
+            //     }
+            //     stage('Push') { 
+            //             sh 'docker login -u $CONTAINR_USER -p $CONTAINR_PASS'
+            //             sh 'docker push $CONTAINR_REPO:$IMAGE_TAG'
+            //             echo "Pushed Docker Image"
+            //     }
             }
         }
         
