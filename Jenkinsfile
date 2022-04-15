@@ -34,7 +34,7 @@ pipeline {
         }
         stage('Deploy App to Kubernetes') {     
             steps {
-                container('alpine/helm') {
+                container('helm') {
                     sh "helm upgrade --install  node-bulletin-board  charts/node-bulletin-board/ -f charts/node-bulletin-board/values.yaml -set image.tag=$IMAGE_TAG -n demo --wait"
                 }
             }
