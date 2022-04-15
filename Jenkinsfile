@@ -4,6 +4,11 @@ pipeline {
             label 'dind'
             defaultContainer 'docker'
             yamlFile 'dind.yaml'
+        }
+    }
+    agent {
+        kubernetes {
+            label 'helm'
             containerTemplate {
                 name 'helm'
                 image 'alpine/helm'
