@@ -1,23 +1,7 @@
 pipeline {
-    agent {
-        kubernetes {
-            label 'dind'
-            defaultContainer 'docker'
-            yamlFile 'dind.yaml'
-        }
-    }
-    agent {
-        kubernetes {
-            label 'helm'
-            containerTemplate {
-                name 'helm'
-                image 'alpine/helm'
-                ttyEnabled true
-                command 'cat'
-            }
-        }
+    agent none
 
-    }
+
     triggers {
         pollSCM('*/1 * * * *')
     } 
@@ -35,6 +19,13 @@ pipeline {
             }
         }
         stage('Build and Push') {
+            agent {
+                kubernetes {
+                    label 'dind'
+                    defaultContainer 'docker'
+                    yamlFile 'dind.yaml'
+                }
+            }
             steps {
                 sh 'docker build -t $CONTAINR_REPO:$IMAGE_TAG .'
                 echo "Built Docker Image"
@@ -44,6 +35,17 @@ pipeline {
             }
         }
         stage('Deploy') {     
+            agent {
+                kubernetes {
+                    label 'helm'
+                    containerTemplate {
+                        name 'helm'
+                        image 'alpine/helm'
+                        ttyEnabled true
+                        command 'cat'
+                    }
+                }
+            }
             steps {
                 container('helm') {
                     sh "helm upgrade --install  node-bulletin-board  charts/node-bulletin-board/ -f charts/node-bulletin-board/values.yaml -set image.tag=$IMAGE_TAG -n demo --wait"
